@@ -16,7 +16,7 @@ $scriptPath = $_GET["scriptPath"];
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>QGIS-Browser</title>
 	<link rel="stylesheet" type="text/css" href="libs/ext/resources/css/ext-all-notheme.css"/>
-	<link rel="stylesheet" type="text/css" href="libs/ext/resources/css/xtheme-gray.css"/>
+	<link rel="stylesheet" type="text/css" href="libs/ext/resources/css/ilu_theme.css"/>
 	<link rel="stylesheet" type="text/css" href="libs/ext/ux/css/ux-all.css" />
 	<link rel="stylesheet" type="text/css" href="css/TriStateTreeAndCheckbox.css" />
 	<link rel="stylesheet" type="text/css" href="css/ThemeSwitcherDataView.css" />

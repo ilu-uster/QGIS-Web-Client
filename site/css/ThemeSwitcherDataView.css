@@ -10,7 +10,7 @@
 #projects ul {
     display: block;
     height: auto;
-    font-size: 95%;
+    font-size: 110%;
 }
 
 #projects ul li img.thumbnail {
@@ -59,4 +59,9 @@
 
 #projects li span {
     color: #999;
+}
+
+/* PM Suchfunktion nicht darstellen, da nicht implementiert */
+#SearchPanel {
+    display: none;
 }
