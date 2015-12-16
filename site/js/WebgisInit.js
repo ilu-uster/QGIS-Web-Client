@@ -141,7 +141,7 @@ Ext.onReady(function () {
 		cycle = new OpenLayers.Layer.OSM("OpenCycleMap",arrayCycle, {attribution: "<a href='http://www.openstreetmap.org/' target='_blank'>Open Street Map</a> and contributors. Tiles courtesy of<a target='_blank' href='http://www.thunderforest.com/'>Andy Allan</a>"});
 
 
-		baseLayers.push(mapnik)
+		baseLayers.push(mapnik);
 		baseLayers.push(baseOSM);
 		baseLayers.push(cycle);
 		baseLayers.push(baseAerial);
@@ -255,7 +255,7 @@ layerTreeSelectionChangeHandlerFunction = function (selectionModel, treeNode) {
 		//change selected activated layers for GetFeatureInfo requests
 		layerTree.fireEvent("leafschange");
 	}
-}
+};
 
 function postLoading() {
 
@@ -349,11 +349,17 @@ function postLoading() {
 		
 		// add components to tree nodes while tree is expanded to match GUI layout
 		// info buttons in layer tree
-		addInfoButtonsToLayerTree();
+		// PM: ohne Infobuttons bessere Lesbarkeit der Legende
+		//addInfoButtonsToLayerTree();
 
 		//expand first level
 		layerTree.root.firstChild.collapseChildNodes(true);
-		layerTree.root.firstChild.expand(false, false);
+		// PM: Legenden-Baum nicht wieder schliessen sonder alle Elemente expandiert lassen
+		layerTree.root.firstChild.expand(true, true);
+
+		// PM: Root-Element ohne Titel
+		layerTree.root.firstChild.text = '';
+
 	}
 	layerTree.checkedLeafs = [];
 	layerTree.resumeEvents();
@@ -956,6 +962,10 @@ function postLoading() {
 		//map themes panel
 		if (mapThemeSwitcherActive == true) {
 			mapThemeSwitcher = new ThemeSwitcher(Ext.getCmp('MapPanel'));
+			
+			// PM: Oeffne Themeswitcher beim ersten Laden der Karte
+			mapThemeSwitcher.openOrInitialize();
+			mapThemeSwitcher.themeSwitcherWindow.maximize();
 		} else {
 			// hide map theme button
 			Ext.getCmp('mapThemeButton').hide();

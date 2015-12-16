@@ -1,8 +1,8 @@
 //default language code, can be overwritten with lang parameter in URL
-var lang = "en"; //for available codes see array availableLanguages in file GlobalOptions.js
+var lang = "de"; //for available codes see array availableLanguages in file GlobalOptions.js
 
 //Help file (must be a local file)
-var helpfile = "help_en.html";
+var helpfile = "help_de.html";
 
 //Custom function to populate GetUrlParams variables
 var customGetUrlParamsParser = null;
@@ -10,7 +10,7 @@ var customGetUrlParamsParser = null;
 //Servername (optional) and path and name name of QGIS Server FCGI-file
 //either with or without server-name - without servername recommended for easier porting to other servers
 //do not add a ? or & after the .fcgi extension
-var serverAndCGI = "/cgi-bin/qgis_mapserv.fcgi";
+var serverAndCGI = "/qgis/qgis_mapserv.fcgi";
 
 //Optional url for print server hosted on a different server. Default: same as above.
 // var serverAndCGI = "http://otherserver/cgi-bin/qgis_mapserv.fcgi";
@@ -38,7 +38,7 @@ var defaultIdentificationMode = "topMostHit";
 
 // use geodesic measures, i.e. not planar measures
 // this is useful if a projection with high distortion of length/area is used, eg.g. GoogleMercator
-var useGeodesicMeasurement = true;
+var useGeodesicMeasurement = false;
 
 //search box for queries while typing
 //enable to use GeoNames search
@@ -71,7 +71,7 @@ var project_map = Ext.urlDecode(window.location.search.substring(1)).map;
 var enableDXFExport = true;
 
 // show the permalink button
-var enablePermalink = true;
+var enablePermalink = false;
 //use a URL shortener for your permalink function
 var permaLinkURLShortener = null; // "/wsgi/createShortPermalink.wsgi";
 
@@ -82,13 +82,15 @@ if (enableBingCommercialMaps) {
     var bingApiKey = "add Bing api key here"; // http://msdn.microsoft.com/en-us/library/ff428642.aspx
 }
 
-var enableGoogleCommercialMaps = true;
+var enableGoogleCommercialMaps = false;
 
-var enableOSMMaps = true;
+var enableOSMMaps = false;
 
 var enableBGMaps = false;
+
 if (enableBingCommercialMaps || enableOSMMaps || enableGoogleCommercialMaps) {
 	enableBGMaps = true;
+
 }
 if (enableBGMaps) {
 	// enter the index of the backgroundLayer to be visible after loading,
@@ -236,17 +238,17 @@ var mapThemeSwitcherActive = true;
 var themeSwitcherTemplate = null;
 
 //first part of titlebar text
-var titleBarText = "GIS-Browser - "; // will be appended with project title
+var titleBarText = ""; // will be appended with project title
 
 // header logo image and link
 var headerLogoImg = null; // path to image, set null for no logo
-var headerLogoHeight = 60; // logo image height in pixels
+var headerLogoHeight = 40; // logo image height in pixels
 var headerLogoLink = ""; // logo links to this URL
 var headerTermsOfUseText = null; // set null for no link
 var headerTermsOfUseLink = ""; // URL to terms of use
 
 //language switcher in qgiswebclient.html
-var enableLangSwitcher = true;
+var enableLangSwitcher = false;
 
 // optional project title per map name
 var projectTitles = {
@@ -270,7 +272,7 @@ var layerImageFormats = [
 */
 
 //EPSG projection code of your QGIS project
-var authid = "EPSG:"+3857;
+var authid = "EPSG:"+21781;
 
 //background transparency for the QGIS Server generated layer (commercial background layers not effected)
 //set to true if you want the background to be transparent, layer image will be bigger (32 vs 24bit)
@@ -319,15 +321,15 @@ var OverviewMapOptions = {
   transitionEffect:"resize"
 };
 var OverviewMapSize = new OpenLayers.Size(200,200);
-var OverviewMapMaximized = false; // is the overview map opend or closed by default
+var OverviewMapMaximized = true; // is the overview map opend or closed by default
 var overviewLayer = null;
 if (enableOSMMaps) {
   overviewLayer = new OpenLayers.Layer.OSM();
 }
 else {
   overviewLayer = new OpenLayers.Layer.WMS("Overview-Map",
-  serverAndCGI+"?map=/home/web/qgis-web-client/projects/naturalearth_110million.qgs",
-  {layers:"Land",format:"image/png"},
+  serverAndCGI+"?map=/srv/www/map/QGIS-Web-Client/projects/baselayers24.qgs",
+  {layers:"LK_color",format:"image/png"},
   {buffer:0,singleTile:true,transitionEffect:"resize"});
 }
 

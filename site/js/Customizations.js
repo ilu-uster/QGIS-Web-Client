@@ -66,6 +66,42 @@ function customAfterMapInit() {
 //     });
 // 
 //     geoExtMap.map.addControl(openlayersClickEvent);
+
+	// PM: Quelle: http://level2.si/index.php/gis-clients-demo/#eqwc
+	// Zeigt Legendensymbol unterhalb Layername in linkem Legendenpannel
+	var treeRoot = layerTree.getNodeById("wmsNode");
+	treeRoot.firstChild.cascade(
+		function (n) {
+			if (n.isLeaf()) {
+				if (n.attributes.checked) {
+					var legendUrl = wmsURI + Ext.urlEncode({
+						SERVICE: "WMS",
+						VERSION: "1.3.0",
+						REQUEST: "GetLegendGraphics",
+						FORMAT: "image/png",
+						EXCEPTIONS: "application/vnd.ogc.se_inimage",
+						BOXSPACE: 1,
+						LAYERSPACE: 2,
+						SYMBOLSPACE: 1,
+						SYMBOLHEIGHT: 2,
+						LAYERFONTSIZE: 8,
+						ITEMFONTSIZE: 8,
+						ICONLABELSPACE: 1.5,
+						LAYERTITLE: "FALSE",
+						LAYERFONTCOLOR: '#FFFFFF',
+						LAYERTITLESPACE: 0,
+						TRANSPARENT: true,
+						LAYERS: n.text,
+						DPI: screenDpi
+					});
+
+					Ext.DomHelper.insertAfter(n.getUI().getAnchor(),
+						"<div id='legend_"+n.text.replace(" ", "-")+"'><img style='vertical-align: middle; margin-left: 50px' src=\""+legendUrl+"\"/></div>"
+					);
+				}
+			}
+		}
+	);
 }
 
 // called at the end of GetMapUrls
@@ -134,6 +170,49 @@ function customActionLayerTreeCheck(n) {
 //    if (n.text == "test layer") {
 //        alert ("test layer check state:" + n.attributes.checked);
 //    }
+	// PM: Quelle: http://level2.si/index.php/gis-clients-demo/#eqwc
+	if (n.isLeaf()) {
+        if (n.attributes.checked) {
+            var toAdd = Ext.get ( "legend_"+n.text.replace(" ", "-") );
+            if (toAdd) {
+            } else {
+                var legendUrl = wmsURI + Ext.urlEncode({
+                        SERVICE: "WMS",
+                        VERSION: "1.3.0",
+                        REQUEST: "GetLegendGraphics",
+                        FORMAT: "image/png",
+                        EXCEPTIONS: "application/vnd.ogc.se_inimage",
+                        BOXSPACE: 1,
+                        LAYERSPACE: 2,
+                        SYMBOLSPACE: 1,
+                        SYMBOLHEIGHT: 2,
+                        //SYMBOLWIDTH: 4,
+                        LAYERFONTSIZE: 8,
+                        ITEMFONTSIZE: 8,
+                        ICONLABELSPACE: 2,
+                        // LAYERFONTFAMILY: "Adobe Blank",
+                        LAYERTITLE: "FALSE",
+                        LAYERFONTCOLOR: '#FFFFFF',
+                        // 			ITEMFONTCOLOR: '#FFFFFF',
+                        LAYERTITLESPACE: 0,
+                        TRANSPARENT: true,
+                        //ITEMFONTSIZE: 0,
+                        LAYERS: n.text,
+                        DPI: screenDpi
+                    });
+
+                Ext.DomHelper.insertAfter(n.getUI().getAnchor(),
+                    "<div id='legend_"+n.text.replace(" ", "-")+"'><img style='vertical-align: middle; margin-left: 50px' src=\""+legendUrl+"\"/></div>"
+                );
+            }
+        } else {
+            var toRemove = Ext.get ( "legend_"+n.text.replace(" ", "-") );
+            if (toRemove) {
+                toRemove.remove();
+            }
+
+        }
+    }
 }
 
 
