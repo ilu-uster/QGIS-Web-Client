@@ -328,7 +328,7 @@ if (enableOSMMaps) {
 }
 else {
   overviewLayer = new OpenLayers.Layer.WMS("Overview-Map",
-  serverAndCGI+"?map=/srv/www/map/QGIS-Web-Client/projects/baselayers24.qgs",
+  serverAndCGI+"?map=/var/www/map/QGIS-Web-Client/projects/baselayers28.qgs",
   {layers:"LK_color",format:"image/png"},
   {buffer:0,singleTile:true,transitionEffect:"resize"});
 }
