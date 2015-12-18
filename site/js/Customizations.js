@@ -73,32 +73,34 @@ function customAfterMapInit() {
 	treeRoot.firstChild.cascade(
 		function (n) {
 			if (n.isLeaf()) {
-				if (n.attributes.checked) {
-					var legendUrl = wmsURI + Ext.urlEncode({
-						SERVICE: "WMS",
-						VERSION: "1.3.0",
-						REQUEST: "GetLegendGraphics",
-						FORMAT: "image/png",
-						EXCEPTIONS: "application/vnd.ogc.se_inimage",
-						BOXSPACE: 1,
-						LAYERSPACE: 2,
-						SYMBOLSPACE: 1,
-						SYMBOLHEIGHT: 2,
-						LAYERFONTSIZE: 8,
-						ITEMFONTSIZE: 8,
-						ICONLABELSPACE: 1.5,
-						LAYERTITLE: "FALSE",
-						LAYERFONTCOLOR: '#FFFFFF',
-						LAYERTITLESPACE: 0,
-						TRANSPARENT: true,
-						LAYERS: n.text,
-						DPI: screenDpi
-					});
+                if (!isRasterImage(n.text)) {
+                    if (n.attributes.checked) {
+                        var legendUrl = wmsURI + Ext.urlEncode({
+                                SERVICE: "WMS",
+                                VERSION: "1.3.0",
+                                REQUEST: "GetLegendGraphics",
+                                FORMAT: "image/png",
+                                EXCEPTIONS: "application/vnd.ogc.se_inimage",
+                                BOXSPACE: 1,
+                                LAYERSPACE: 2,
+                                SYMBOLSPACE: 1,
+                                SYMBOLHEIGHT: 2,
+                                LAYERFONTSIZE: 8,
+                                ITEMFONTSIZE: 8,
+                                ICONLABELSPACE: 1.5,
+                                LAYERTITLE: "FALSE",
+                                LAYERFONTCOLOR: '#FFFFFF',
+                                LAYERTITLESPACE: 0,
+                                TRANSPARENT: true,
+                                LAYERS: n.text,
+                                DPI: screenDpi
+                            });
 
-					Ext.DomHelper.insertAfter(n.getUI().getAnchor(),
-						"<div id='legend_"+n.text.replace(" ", "-")+"'><img style='vertical-align: middle; margin-left: 50px' src=\""+legendUrl+"\"/></div>"
-					);
-				}
+                        Ext.DomHelper.insertAfter(n.getUI().getAnchor(),
+                            "<div id='legend_" + n.text.replace(" ", "-") + "'><img style='vertical-align: middle; margin-left: 50px' src=\"" + legendUrl + "\"/></div>"
+                        );
+                    }
+                }
 			}
 		}
 	);
@@ -174,7 +176,7 @@ function customActionLayerTreeCheck(n) {
 	if (n.isLeaf()) {
         if (n.attributes.checked) {
             var toAdd = Ext.get ( "legend_"+n.text.replace(" ", "-") );
-            if (toAdd) {
+            if (toAdd || isRasterImage(n.text)) {
             } else {
                 var legendUrl = wmsURI + Ext.urlEncode({
                         SERVICE: "WMS",
@@ -227,4 +229,24 @@ function customActionOnZoomEvent() {
 // called after a drag, pan, or zoom completed
 function customActionOnMoveEvent() {
 	// ... action to do on call
+}
+
+
+function isRasterImage (layername) {
+    var rasterImgNames = [
+        'swisstopo',
+        'Luftbild',
+        'Ortho',
+        'ortho',
+		'Landeskarte',
+		'swissimage',
+		'SWISSIMAGE'
+    ];
+
+    for (var n in rasterImgNames) {
+        if (layername.indexOf(rasterImgNames[n]) > -1) {
+            return true;
+        }
+    }
+    return false;
 }
