@@ -108,17 +108,19 @@ function customAfterMapInit() {
 
     // Zoom to Map-Theme center
     var projectSettings = getGisProjectSettings(layerTree.root.firstChild.text);
-    var newExtent = projectSettings.startExtent.split(",").map(Number);
-    var newZoom = geoExtMap.map.getZoomForExtent(new OpenLayers.Bounds(newExtent), false);
-    var curExtent = geoExtMap.map.getExtent().toArray();
-    var curZoom = geoExtMap.map.getZoom();
+    if (projectSettings.hasOwnProperty('startExtent')) {
+        var newExtent = projectSettings.startExtent.split(",").map(Number);
+        var newZoom = geoExtMap.map.getZoomForExtent(new OpenLayers.Bounds(newExtent), false);
+        var curExtent = geoExtMap.map.getExtent().toArray();
+        var curZoom = geoExtMap.map.getZoom();
 
-    if (    ((curExtent[0] <= newExtent[0] <= curExtent[2]) || (curExtent[0] <= newExtent[2] <= curExtent[2]))
-         && ((curExtent[1] <= newExtent[1] <= curExtent[3]) || (curExtent[1] <= newExtent[3] <= curExtent[3]))
-         && (Math.abs(newZoom - curZoom) <= 2.5)) {
-        // do nothing
-    } else {
-        geoExtMap.map.zoomToExtent(newExtent, true);
+        if (((newExtent[0] >= curExtent[0] && curExtent[0] <= curExtent[2]) || (newExtent[2] >= curExtent[0] && newExtent[2] <= curExtent[2]))
+            && ((newExtent[1] >= curExtent[1] && newExtent[1] <= curExtent[3]) || (newExtent[3] >= curExtent[1] && newExtent[3] <= curExtent[3]))
+            && (Math.abs(newZoom - curZoom) <= 2.5)) {
+            // do nothing
+        } else {
+            geoExtMap.map.zoomToExtent(newExtent, true);
+        }
     }
 
     layerTree.root.firstChild.text = '';
