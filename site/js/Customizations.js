@@ -256,9 +256,14 @@ function customActionOnMoveEvent() {
 function isRasterImage (layername) {
     var rasterImgNames = [
         'swisstopo',
+        'Swisstopo',
         'Luftbild',
         'Ortho',
-        'ortho'
+        'ortho',
+        'swissimage',
+        'Swissimage',
+        'SWISSIMAGE',
+        'Landeskarte'
     ];
 
     for (var n in rasterImgNames) {
