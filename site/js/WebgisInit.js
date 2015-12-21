@@ -358,7 +358,7 @@ function postLoading() {
 		layerTree.root.firstChild.expand(true, true);
 
 		// PM: Root-Element ohne Titel
-		layerTree.root.firstChild.text = '';
+		//layerTree.root.firstChild.text = '';
 
 	}
 	layerTree.checkedLeafs = [];

@@ -22,7 +22,7 @@ var printServer = serverAndCGI;
 var useGetProjectSettings = true;
 
 // show the layerOrderTab in the GUI
-var showLayerOrderTab = true;
+var showLayerOrderTab = false;
 
 // show layername in layerTree in gray when layer is outside visible scale
 var grayLayerNameWhenOutsideScale = true;
