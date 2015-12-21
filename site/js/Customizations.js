@@ -114,9 +114,9 @@ function customAfterMapInit() {
         var curExtent = geoExtMap.map.getExtent().toArray();
         var curZoom = geoExtMap.map.getZoom();
 
-        if (((newExtent[0] >= curExtent[0] && curExtent[0] <= curExtent[2]) || (newExtent[2] >= curExtent[0] && newExtent[2] <= curExtent[2]))
+        if (((newExtent[0] >= curExtent[0] && newExtent[0] <= curExtent[2]) || (newExtent[2] >= curExtent[0] && newExtent[2] <= curExtent[2]))
             && ((newExtent[1] >= curExtent[1] && newExtent[1] <= curExtent[3]) || (newExtent[3] >= curExtent[1] && newExtent[3] <= curExtent[3]))
-            && (Math.abs(newZoom - curZoom) <= 2.5)) {
+            && (Math.abs(newZoom - curZoom) <= 4)) {
             // do nothing
         } else {
             geoExtMap.map.zoomToExtent(newExtent, true);
