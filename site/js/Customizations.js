@@ -108,7 +108,7 @@ function customAfterMapInit() {
 
     // Zoom to Map-Theme center
     var projectSettings = getGisProjectSettings(layerTree.root.firstChild.text);
-    if (projectSettings.hasOwnProperty('startExtent')) {
+    if (projectSettings != null) {
         var newExtent = projectSettings.startExtent.split(",").map(Number);
         var newZoom = geoExtMap.map.getZoomForExtent(new OpenLayers.Bounds(newExtent), false);
         var curExtent = geoExtMap.map.getExtent().toArray();
