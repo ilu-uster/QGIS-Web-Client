@@ -15,3 +15,7 @@ qgis-web-client.conf
 site/js/Translations_custom.js
 .gitignore
 
+# Project Folders
+projects/
+site/thumbnails/
+data/
