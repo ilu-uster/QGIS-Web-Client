@@ -14,6 +14,8 @@ qgis-web-client.conf
 *.swp
 site/js/Translations_custom.js
 .gitignore
+
+# Project Folders
 projects/
+site/thumbnails/
 data/
-site/thumbanils/
