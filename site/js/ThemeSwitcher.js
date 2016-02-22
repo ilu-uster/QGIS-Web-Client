@@ -329,6 +329,7 @@ ThemeSwitcher.prototype.changeTheme = function (dataView, index, node, evt) {
 				wmsMapName = projData.projectfile;
 			}
 		}
+		printURI = wmsURI;
 		//handle visible layers
 		if (projData.visibleLayers) {
 			visibleLayers = projData.visibleLayers.split(",");

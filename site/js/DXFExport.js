@@ -165,7 +165,7 @@ function DXFExporter(parentPanel) {
 									getDXFURL += mapThemeSwitcher.activeProjectData.projectfile + "_";
 								}
 								//add date to filename
-								getDXFURL += today+".dxf&CRS=EPSG:"+authid+"&BBOX="+geoExtMap.map.getExtent().toString()+"&WIDTH="+geoExtMap.map.getSize().w+"&HEIGHT="+geoExtMap.map.getSize().h+"&LAYERS=";
+								getDXFURL += today+".dxf&CRS="+authid+"&BBOX="+geoExtMap.map.getExtent().toString()+"&WIDTH="+geoExtMap.map.getSize().w+"&HEIGHT="+geoExtMap.map.getSize().h+"&LAYERS=";
 								//check if we need to enable additional layers
 								var DXFExportLayers = thematicLayer.params.LAYERS;
 								if (mapThemeSwitcher !== null && typeof(mapThemeSwitcher.activeProjectData) !== 'undefined') {

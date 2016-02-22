@@ -22,7 +22,7 @@ var printServer = serverAndCGI;
 var useGetProjectSettings = true;
 
 // show the layerOrderTab in the GUI
-var showLayerOrderTab = false;
+var showLayerOrderTab = true;
 
 // show layername in layerTree in gray when layer is outside visible scale
 var grayLayerNameWhenOutsideScale = true;
@@ -68,7 +68,7 @@ var project_map = Ext.urlDecode(window.location.search.substring(1)).map;
 //control if DXF export is globally enabled
 //note that DXF export needs a recent QGIS server equal or younger to https://github.com/qgis/QGIS/commit/4e7efd669de21f58adcf32be21df4ac510a67c3a (2015-07)
 //other settings can/should be set in the file GISProjectListing.js
-var enableDXFExport = true;
+var enableDXFExport = false;    // DXF Export erst ab QGIS 2.11 !
 
 // show the permalink button
 var enablePermalink = false;
@@ -279,17 +279,17 @@ var authid = "EPSG:"+21781;
 var qgisLayerTransparency = true;
 
 //number of zoomlevels, uses main map layer and all base layers
-var ZOOM_LEVELS = 22;
+var ZOOM_LEVELS = 14;
 
 // OpenLayers global options
 // see http://dev.openlayers.org/releases/OpenLayers-2.10/doc/apidocs/files/OpenLayers/Map-js.html
 var MapOptions = {
   projection: new OpenLayers.Projection(authid),
   units: "m",
-//  maxScale:50,
-//  minScale:40000000,
+  maxScale:378,
+  minScale:2456694,
   numZoomLevels:ZOOM_LEVELS,
-  fractionalZoom: !enableWmtsBaseLayers && !enableBGMaps,
+  fractionalZoom: false,
   transitionEffect:"resize",
   controls: []
 };
@@ -316,8 +316,8 @@ var LayerOptions = {
 var OverviewMapOptions = {
   projection: new OpenLayers.Projection(authid),
   units: "m",
-  maxScale:50,
-  minScale:300000000,
+  maxScale:378,
+  minScale:2456694,
   transitionEffect:"resize"
 };
 var OverviewMapSize = new OpenLayers.Size(200,200);
@@ -328,7 +328,7 @@ if (enableOSMMaps) {
 }
 else {
   overviewLayer = new OpenLayers.Layer.WMS("Overview-Map",
-  serverAndCGI+"?map=/var/www/map/QGIS-Web-Client/projects/baselayers28.qgs",
+  serverAndCGI+"?map=/srv/www/map/QGIS-Web-Client/projects/baselayers24.qgs",
   {layers:"LK_color",format:"image/png"},
   {buffer:0,singleTile:true,transitionEffect:"resize"});
 }
