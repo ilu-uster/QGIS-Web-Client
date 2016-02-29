@@ -355,7 +355,7 @@ function postLoading() {
 		//expand first level
 		layerTree.root.firstChild.collapseChildNodes(true);
 		// PM: Legenden-Baum nicht wieder schliessen sonder alle Elemente expandiert lassen
-		layerTree.root.firstChild.expand(true, true);
+		//layerTree.root.firstChild.expand(true, true);
 
 		// PM: Root-Element ohne Titel
 		//layerTree.root.firstChild.text = '';
