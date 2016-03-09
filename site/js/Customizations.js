@@ -73,7 +73,7 @@ function customAfterMapInit() {
 	treeRoot.firstChild.cascade(
 		function (n) {
 			if (n.isLeaf()) {
-                if (!isRasterImage(n.text)) {
+                if (!isRasterImage(n.text) || n.parentNode.text != 'Hintergrund') {
                     if (n.attributes.checked) {
                         var legendUrl = wmsURI + Ext.urlEncode({
                                 SERVICE: "WMS",
@@ -197,7 +197,7 @@ function customActionLayerTreeCheck(n) {
 	if (n.isLeaf()) {
         if (n.attributes.checked) {
             var toAdd = Ext.get ( "legend_"+n.text.replace(" ", "-") );
-            if (toAdd || isRasterImage(n.text)) {
+            if (toAdd || isRasterImage(n.text) || n.parentNode.text == 'Hintergrund') {
             } else {
                 var legendUrl = wmsURI + Ext.urlEncode({
                         SERVICE: "WMS",
