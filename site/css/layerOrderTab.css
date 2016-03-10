@@ -20,11 +20,17 @@
   width: 15px;
   height: 15px;
 }
-.action-down {
+.action-down-inactive {
   background-position: 0 -75px;
 }
+.action-down {
+  background-position: -15px -75px;
+}
 .action-up {
-  background-position: 0 -60px;
+  background-position: -15px -60px;
+}
+.folder {
+  background-position: 0 -360px;
 }
 .action-visible {
   background-position: 0 0;

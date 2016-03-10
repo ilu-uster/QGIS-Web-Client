@@ -67,44 +67,6 @@ function customAfterMapInit() {
 // 
 //     geoExtMap.map.addControl(openlayersClickEvent);
 
-	// PM: Quelle: http://level2.si/index.php/gis-clients-demo/#eqwc
-	// Zeigt Legendensymbol unterhalb Layername in linkem Legendenpannel
-	var treeRoot = layerTree.getNodeById("wmsNode");
-	treeRoot.firstChild.cascade(
-		function (n) {
-			if (n.isLeaf()) {
-                if (!isRasterImage(n.text) || n.parentNode.text != 'Hintergrund') {
-                    if (n.attributes.checked) {
-                        var legendUrl = wmsURI + Ext.urlEncode({
-                                SERVICE: "WMS",
-                                VERSION: "1.3.0",
-                                REQUEST: "GetLegendGraphics",
-                                FORMAT: "image/png",
-                                EXCEPTIONS: "application/vnd.ogc.se_inimage",
-                                BOXSPACE: 1,
-                                LAYERSPACE: 2,
-                                SYMBOLSPACE: 1,
-                                SYMBOLHEIGHT: 2,
-                                LAYERFONTSIZE: 8,
-                                ITEMFONTSIZE: 8,
-                                ICONLABELSPACE: 1.5,
-                                LAYERTITLE: "FALSE",
-                                LAYERFONTCOLOR: '#FFFFFF',
-                                LAYERTITLESPACE: 0,
-                                TRANSPARENT: true,
-                                LAYERS: n.text,
-                                DPI: screenDpi
-                            });
-
-                        Ext.DomHelper.insertAfter(n.getUI().getAnchor(),
-                            "<div id='legend_" + n.text.replace(" ", "-") + "'><img style='vertical-align: middle; margin-left: 50px' src=\"" + legendUrl + "\"/></div>"
-                        );
-                    }
-                }
-			}
-		}
-	);
-
 
     // Zoom to Map-Theme center
     var projectSettings = getGisProjectSettings(layerTree.root.firstChild.text);
@@ -193,49 +155,6 @@ function customActionLayerTreeCheck(n) {
 //    if (n.text == "test layer") {
 //        alert ("test layer check state:" + n.attributes.checked);
 //    }
-	// PM: Quelle: http://level2.si/index.php/gis-clients-demo/#eqwc
-	if (n.isLeaf()) {
-        if (n.attributes.checked) {
-            var toAdd = Ext.get ( "legend_"+n.text.replace(" ", "-") );
-            if (toAdd || isRasterImage(n.text) || n.parentNode.text == 'Hintergrund') {
-            } else {
-                var legendUrl = wmsURI + Ext.urlEncode({
-                        SERVICE: "WMS",
-                        VERSION: "1.3.0",
-                        REQUEST: "GetLegendGraphics",
-                        FORMAT: "image/png",
-                        EXCEPTIONS: "application/vnd.ogc.se_inimage",
-                        BOXSPACE: 1,
-                        LAYERSPACE: 2,
-                        SYMBOLSPACE: 1,
-                        SYMBOLHEIGHT: 2,
-                        //SYMBOLWIDTH: 4,
-                        LAYERFONTSIZE: 8,
-                        ITEMFONTSIZE: 8,
-                        ICONLABELSPACE: 2,
-                        // LAYERFONTFAMILY: "Adobe Blank",
-                        LAYERTITLE: "FALSE",
-                        LAYERFONTCOLOR: '#FFFFFF',
-                        // 			ITEMFONTCOLOR: '#FFFFFF',
-                        LAYERTITLESPACE: 0,
-                        TRANSPARENT: true,
-                        //ITEMFONTSIZE: 0,
-                        LAYERS: n.text,
-                        DPI: screenDpi
-                    });
-
-                Ext.DomHelper.insertAfter(n.getUI().getAnchor(),
-                    "<div id='legend_"+n.text.replace(" ", "-")+"'><img style='vertical-align: middle; margin-left: 50px' src=\""+legendUrl+"\"/></div>"
-                );
-            }
-        } else {
-            var toRemove = Ext.get ( "legend_"+n.text.replace(" ", "-") );
-            if (toRemove) {
-                toRemove.remove();
-            }
-
-        }
-    }
 }
 
 
@@ -272,4 +191,94 @@ function isRasterImage (layername) {
         }
     }
     return false;
+}
+
+
+
+function customAddInfoButtonsToLayerTree() {
+    var treeRoot = layerTree.getNodeById("wmsNode");
+    treeRoot.firstChild.cascade(
+        function (n) {
+            var layerProperties = wmsLoader.layerProperties[wmsLoader.layerTitleNameMapping[n.text]];
+
+            if (!n.isLeaf()) {
+                Ext.DomHelper.insertBefore(n.getUI().getAnchor(), {
+                    tag: 'b',
+                    cls: 'layer-button x-tool folder'
+                });
+            }
+
+            else if ((!layerProperties.showLegend && !layerProperties.showMetadata)
+                || n.parentNode.text == 'Hintergrund' || isRasterImage(layerProperties.name)
+            ) {
+                // no info button, add blank element to keep text aligned
+                Ext.DomHelper.insertBefore(n.getUI().getAnchor(), {
+                    tag: 'b',
+                    cls: 'layer-button x-tool action-down-inactive'
+                });
+            }
+            else {
+                // info button
+                var buttonId = 'layer_' + n.id;
+                Ext.DomHelper.insertBefore(n.getUI().getAnchor(), {
+                    tag: 'b',
+                    id: buttonId,
+                    cls: 'layer-button x-tool action-down'
+                });
+
+                // add legend
+                var legendUrl = wmsURI + Ext.urlEncode({
+                        SERVICE: "WMS",
+                        VERSION: "1.3.0",
+                        REQUEST: "GetLegendGraphics",
+                        FORMAT: "image/png",
+                        EXCEPTIONS: "application/vnd.ogc.se_inimage",
+                        BOXSPACE: 1,
+                        LAYERSPACE: 0,
+                        SYMBOLSPACE: 1,
+                        SYMBOLHEIGHT: 2,
+                        SYMBOLWIDTH: 4,
+                        LAYERFONTSIZE: 0,
+                        ITEMFONTSIZE: 8,
+                        ICONLABELSPACE: 2,
+                        //LAYERFONTFAMILY: "Adobe Blank",
+                        LAYERTITLE: false,
+                        LAYERFONTCOLOR: '#FFFFFF',
+                        // 			ITEMFONTCOLOR: '#FFFFFF',
+                        LAYERTITLESPACE: 0,
+                        TRANSPARENT: true,
+                        //ITEMFONTSIZE: 0,
+                        LAYERS: n.text,
+                        DPI: screenDpi
+                    });
+
+                var legendId = 'legend_' + n.id;
+                var legendEl = Ext.DomHelper.insertAfter(n.getUI().getAnchor(),
+                    {
+                        tag: 'div',
+                        id: legendId,
+                        style: 'margin-left: ' + 16 * (n.getDepth() + 1) + 'px;'
+                    },
+                    true
+                );
+                legendEl.setVisibilityMode(Ext.Element.DISPLAY);
+
+
+                Ext.get(buttonId).on('click', function (e) {
+                    if (legendEl.select('img').first() == null) {
+                        // add legend image on first expand
+                        legendEl.createChild({
+                            tag: 'img',
+                            src: legendUrl
+                        });
+                        legendEl.toggle();
+                    }
+                    this.toggleClass('action-down');
+                    this.toggleClass('action-up');
+                    legendEl.toggle();
+                });
+
+            }
+        }
+    );
 }

@@ -349,16 +349,13 @@ function postLoading() {
 		
 		// add components to tree nodes while tree is expanded to match GUI layout
 		// info buttons in layer tree
-		// PM: ohne Infobuttons bessere Lesbarkeit der Legende
 		//addInfoButtonsToLayerTree();
+		// PM: custom Fuktion mit anderem Verhalten
+		customAddInfoButtonsToLayerTree();
+
 
 		//expand first level
 		layerTree.root.firstChild.collapseChildNodes(true);
-		// PM: Legenden-Baum nicht wieder schliessen sonder alle Elemente expandiert lassen
-		//layerTree.root.firstChild.expand(true, true);
-
-		// PM: Root-Element ohne Titel
-		//layerTree.root.firstChild.text = '';
 
 	}
 	layerTree.checkedLeafs = [];
