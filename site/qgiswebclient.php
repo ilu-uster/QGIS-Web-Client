@@ -24,13 +24,13 @@ $scriptPath = $_GET["scriptPath"];
 	<link rel="stylesheet" type="text/css" href="css/layerOrderTab.css" />
     <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
 <!--
-	<script type="text/javascript" src="libs/ext/adapter/ext/ext-base.js"></script>
+	<script type="text/javascript" src="libs/ext/adapter/ext/ext-base-debug.js"></script>
 -->
-    <script type="text/javascript" src="libs/ext/adapter/ext/ext-base-debug.js"></script>
+    <script type="text/javascript" src="libs/ext/adapter/ext/ext-base.js"></script>
 <!--
-	<script type="text/javascript" src="libs/ext/ext-all.js"></script>
+	<script type="text/javascript" src="libs/ext/ext-all-debug-w-comments.js"></script>
 -->
-    <script type="text/javascript" src="libs/ext/ext-all-debug-w-comments.js"></script>
+    <script type="text/javascript" src="libs/ext/ext-all.js"></script>
 	<script type="text/javascript" src="libs/ext/ux/ux-all.js"></script>
 	<script type="text/javascript" src="libs/proj4js/proj4js-compressed.js"></script>
 	<script type="text/javascript" src="libs/openlayers/OpenLayers.js"></script>
@@ -48,7 +48,6 @@ $scriptPath = $_GET["scriptPath"];
 	<script type="text/javascript" src="js/Customizations.js"></script>
 	
 	<!-- PM 01.10.2015: Auskommentiert und durch dynamische Adresse ersetzt  -->
-	<!-- <script type="text/javascript" src="../../infonetz/projectData/ilu_Wartung_Kunde/global/modMap/GISprojects.js"></script>-->
 	<script type="text/javascript" src="<?=$scriptPath?>"></script>
 	
 	<script type="text/javascript" src="js/GetUrlParams.js"></script>
