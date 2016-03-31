@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5
 .olPopup .olFramedCloudPopupContent
 {
 	min-width:200px;
-	max-width:400px;
+	max-width: 900px;
 	max-height:350px; /*should be .olPopup max-height - 50 */
 	background-color: #ffffff !important;
 	padding: 1px !important;
@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5
 
 .olFramedCloudPopupContent {
 	pointer-events: auto;
-    max-width:400px;
+    max-width:900px;
 }
 
 .olPopup .olFramedCloudPopupContent h2
