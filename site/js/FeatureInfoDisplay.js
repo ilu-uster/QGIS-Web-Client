@@ -23,6 +23,7 @@
 
 var featureInfoPopupContents;
 var closePopupClick = false; // stores if the click results from closing a clickPopup
+var insideHooverPopup = false;
 
 function showFeatureInfo(evt) {
     if (identifyToolActive) {
@@ -82,7 +83,11 @@ function showFeatureInfo(evt) {
 function showFeatureInfoHover(evt) {
     var map = geoExtMap.map; // gets OL map object
     if (identifyToolActive) {
-        if (hoverPopup) {removeHoverPopup();}
+        if (hoverPopup && insideHooverPopup) {
+            return;
+        } else if (hoverPopup && !insideHooverPopup) {
+            removeHoverPopup();
+        }
         if (window.DOMParser) {
             var parser = new DOMParser();
             xmlDoc = parser.parseFromString(evt.text, "text/xml");
@@ -206,12 +211,18 @@ function showFeatureInfoHover(evt) {
                 hoverPopup.keepInMap = true;
                 hoverPopup.panMapIfOutOfView = false;
                 hoverPopup.events.on({"click": onHoverPopupClick});
+                hoverPopup.events.on({"mouseout": onHoverPopupMouseleave});
+
                 map.addPopup(hoverPopup);
             }
         } else {
             changeCursorInMap("default");
         }
     }
+}
+
+function onHoverPopupMouseleave(evt) {
+    insideHooverPopup = true;
 }
 
 // disable all GetFeatureInfoRequest until we have a reponse
