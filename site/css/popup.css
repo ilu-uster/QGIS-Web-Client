@@ -18,7 +18,7 @@ h1, h2, h3, h4, h5
 {
 	overflow:inherit;
 	pointer-events: none;
-	max-height:400px;
+	max-height:430px;
 }
 
 .olPopup *
@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5
 }
 
 .olPopup div[id$='_FrameDecorationDiv_0'],.olPopup div[id$='_FrameDecorationDiv_1'] {
-	max-height:350px; /*should be .olPopup max-height - 50 */
+	max-height:380px; /*should be .olPopup max-height - 50 */
 }
 
 .olPopup a.close
@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5
 {
 	min-width:200px;
 	max-width: 900px;
-	max-height:350px; /*should be .olPopup max-height - 50 */
+	max-height:380px; /*should be .olPopup max-height - 50 */
 	background-color: #ffffff !important;
 	padding: 1px !important;
 	margin: 0px !important;
@@ -93,6 +93,15 @@ h1, h2, h3, h4, h5
 {
 	border-collapse:collapse;
 	overflow: auto;
+	padding: 6px 0px;
+	width: 100%;
+	margin-bottom: 1em;
+}
+
+.olPopup .olFramedCloudPopupContent img
+{
+	border-collapse:collapse;
+	overflow-x: hidden;
 	padding: 6px 0px;
 	width: 100%;
 	margin-bottom: 1em;
