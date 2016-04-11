@@ -78,8 +78,10 @@ function customAfterMapInit() {
 
         if (((newExtent[0] >= curExtent[0] && newExtent[0] <= curExtent[2]) || (newExtent[2] >= curExtent[0] && newExtent[2] <= curExtent[2]))
             && ((newExtent[1] >= curExtent[1] && newExtent[1] <= curExtent[3]) || (newExtent[3] >= curExtent[1] && newExtent[3] <= curExtent[3]))
-            && (Math.abs(newZoom - curZoom) <= 4)) {
-            // do nothing
+            && (Math.abs(newZoom - curZoom) <= 2)) {
+            // 1) Neuer Extent befindet sich komplett im alten Extent
+            // 2) neuer Extent ist nicht mehr als 2-fach kleiner als der ursprünglichen Extent
+            // --> dann kein Zoom/Pan durchführen
         } else {
             geoExtMap.map.zoomToExtent(newExtent, true);
         }
@@ -204,8 +206,14 @@ function customAddInfoButtonsToLayerTree() {
             if (!n.isLeaf()) {
                 Ext.DomHelper.insertBefore(n.getUI().getAnchor(), {
                     tag: 'b',
+                    id: n.id,
                     cls: 'layer-button x-tool folder'
                 });
+
+                n.on('click', function(e) {
+                    this.toggle();
+                });
+
             }
 
             else if ((!layerProperties.showLegend && !layerProperties.showMetadata)
@@ -263,8 +271,7 @@ function customAddInfoButtonsToLayerTree() {
                 );
                 legendEl.setVisibilityMode(Ext.Element.DISPLAY);
 
-
-                Ext.get(buttonId).on('click', function (e) {
+                n.on('click', function(e) {
                     if (legendEl.select('img').first() == null) {
                         // add legend image on first expand
                         legendEl.createChild({
@@ -273,8 +280,8 @@ function customAddInfoButtonsToLayerTree() {
                         });
                         legendEl.toggle();
                     }
-                    this.toggleClass('action-down');
-                    this.toggleClass('action-up');
+                    Ext.get(buttonId).toggleClass('action-down');
+                    Ext.get(buttonId).toggleClass('action-up');
                     legendEl.toggle();
                 });
 
