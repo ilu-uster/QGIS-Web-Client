@@ -78,7 +78,7 @@ function customAfterMapInit() {
 
         if (((newExtent[0] >= curExtent[0] && newExtent[0] <= curExtent[2]) || (newExtent[2] >= curExtent[0] && newExtent[2] <= curExtent[2]))
             && ((newExtent[1] >= curExtent[1] && newExtent[1] <= curExtent[3]) || (newExtent[3] >= curExtent[1] && newExtent[3] <= curExtent[3]))
-            && (Math.abs(newZoom - curZoom) <= 2)) {
+            && (Math.abs(newZoom - curZoom) < 2)) {
             // 1) Neuer Extent befindet sich komplett im alten Extent
             // 2) neuer Extent ist nicht mehr als 2-fach kleiner als der ursprünglichen Extent
             // --> dann kein Zoom/Pan durchführen
