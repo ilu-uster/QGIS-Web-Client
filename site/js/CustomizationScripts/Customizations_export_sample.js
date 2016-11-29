@@ -126,68 +126,67 @@ function customAfterMapInit() {
 				ExportProvider = new QGIS.ExportProvider({
 						method: "POST", // "POST" recommended for production use
 						capabilities: printCapabilities, // from the info.json script in the html
-						url: '../php/export.php?'
-				});
+					url: '..php/export.php?'
+});
 
 				
 				var exportLayoutsDefined =true;
 				
 				var OriginalPrintProviderUrl = printProvider.url;
 
-						
-							if (exportLayoutsDefined == true) {
-								//create new window to hold exporting toolbar
-								exportWindow = new Ext.Window({
-									title: 'Export',
-									//printSettingsToolbarTitleString[lang],
-									height: 67,
-									width: 200,
-									layout: "fit",
-									renderTo: "geoExtMapPanel",
-									resizable: false,
-									closable: false,
-									x: 50,
-									y: 10,
-									items: [{
-									
-										tbar: {
-											xtype: 'toolbar',
-											autoHeight: true,
-											id: 'myExportToolbar',
-											
-											items: [{
-												xtype: 'button',
-												tooltip: 'Export',
-												text: 'Export',
-												tooltipType: 'qtip',
-												iconCls: '',
-												scale: 'medium',
-												id: 'StartExporting',
-												listeners: {
-													'click': function () {
-														Ext.getCmp('ExportMap').toggle(false);
-														ExportProvider.print(geoExtMap, [printExtent.page]);
+				if (exportLayoutsDefined == true) {
+					//create new window to hold exporting toolbar
+					exportWindow = new Ext.Window({
+						title: 'Export',
+						//printSettingsToolbarTitleString[lang],
+						height: 67,
+						width: 200,
+						layout: "fit",
+						renderTo: "geoExtMapPanel",
+						resizable: false,
+						closable: false,
+						x: 50,
+						y: 10,
+						items: [{
 
-													}
-												}
-											}, {
-												xtype: 'button',
-												tooltip: printCancelButtonTooltipString[lang],
-												text: printCancelButtonTextString[lang],
-												tooltipType: 'qtip',
-												iconCls: '',
-												scale: 'medium',
-												id: 'CancelExporting',
-												listeners: {
-													'click': function () {
-														Ext.getCmp('ExportMap').toggle(false);
-													}
-												}
-											}]
-										}
-									}]
-								});
-							}
+							tbar: {
+								xtype: 'toolbar',
+								autoHeight: true,
+								id: 'myExportToolbar',
+
+								items: [{
+									xtype: 'button',
+									tooltip: 'Export',
+									text: 'Export',
+									tooltipType: 'qtip',
+									iconCls: '',
+									scale: 'medium',
+									id: 'StartExporting',
+									listeners: {
+									'click': function () {
+										Ext.getCmp('ExportMap').toggle(false);
+										ExportProvider.print(geoExtMap, [printExtent.page]);
+
+									}
+								}
+							}, {
+								xtype: 'button',
+								tooltip: printCancelButtonTooltipString[lang],
+								text: printCancelButtonTextString[lang],
+								tooltipType: 'qtip',
+								iconCls: '',
+								scale: 'medium',
+								id: 'CancelExporting',
+								listeners: {
+									'click': function () {
+										Ext.getCmp('ExportMap').toggle(false);
+									}
+								}
+							}]
+						}
+					}]
+				});
+			}
 }
 
 // called when DOM is ready (Ext.onReady in WebgisInit.js)

@@ -492,7 +492,7 @@ function postLoading() {
 	}
 	else {
 		printProvider = new QGIS.PrintProvider({
-			method: "GET", // "POST" recommended for production use
+			method: "POST", // "POST" recommended for production use
 			capabilities: printCapabilities, // from the info.json script in the html
 			url: printUrl
 		});

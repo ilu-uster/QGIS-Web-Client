@@ -496,6 +496,7 @@ Ext.extend(QGIS.PrintProvider, GeoExt.data.PrintProvider, {
   download: function(url) {
     if (this.fireEvent("beforedownload", this, url) !== false) {
       //because of an IE bug one has to do it in two steps
+        /*
       var parentPanel = Ext.getCmp('geoExtMapPanel');
       var pdfWindow = new Ext.Window(
         {
@@ -513,8 +514,14 @@ Ext.extend(QGIS.PrintProvider, GeoExt.data.PrintProvider, {
       );
       pdfWindow.show();
       Ext.getBody().unmask();
+      */
     }
-    this.fireEvent("print", this, url);
+      Ext.getBody().unmask();
+      // Start download in same window --> only working, if server header
+      //    "Content-Disposition: attachment" is added to response
+      //window.location.href = url;
+      // Open PDF in a new window / tab
+      window.open(url);
   }
 }
 );
